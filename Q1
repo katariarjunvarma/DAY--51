@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+int maxDepth(TreeNode* root, int target, int depth) {
+    if (root == nullptr) {
+        return -1;
+    }
+
+    if (root->val == target) {
+        return depth;
+    }
+
+    int leftDepth = maxDepth(root->left, target, depth + 1);
+    int rightDepth = maxDepth(root->right, target, depth + 1);
+
+    return max(leftDepth, rightDepth);
+}
+
+int main() {
+    // Construct the binary tree
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+
+    int target1 = 5;
+    int target2 = 6;
+
+    int depth1 = maxDepth(root, target1, 1);
+    int depth2 = maxDepth(root, target2, 1);
+
+    cout << "Maximum depth of " << target1 << ": " << depth1 << endl;
+    cout << "Maximum depth of " << target2 << ": " << depth2 << endl;
+
+    return 0;
+}
